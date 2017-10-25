@@ -1224,7 +1224,8 @@ int main(){
                 r[k] = r[j];
                 k++, j++;
             }
-            r[k] = '\0';
+
+r[k] = '\0';
         }
     }
     printf("%s", r);
@@ -1258,6 +1259,7 @@ int main(){
 */
 
 //数据结构（C语言描述） P95 - 四 - 3
+/*
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -1292,4 +1294,194 @@ int main(){
 
     return 0;
 }
+*/
 
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXSIZE 100
+
+typedef int ElemType;
+
+/*	//顺序栈 
+typedef struct{
+	ElemType elem[MAXSIZE];
+	int top;
+}Stack;
+*/
+
+typedef struct SNode{
+	ElemType data;
+	struct SNode *next;
+}SNode;
+typedef struct LinkStack{
+	SNode *top;
+}Stack;
+/*	//顺序栈函数声明部分 
+void InitStack(Stack **);	//初始化栈 
+int Push(Stack *, ElemType);	//压栈 
+int Pop(Stack *, ElemType *);	//出栈 
+void Convert(Stack *);	//进制转换 
+*/	//顺序栈函数声明结束
+
+void InitStack(Stack *s);
+void Push(Stack *, ElemType); 
+int Pop(Stack *, ElemType *);
+void Convert(Stack *);	//进制转换 
+
+int main(){
+	int choose; //菜单选择 
+	int e;	//函数返回值 
+	int f;	//判断函数是否正确执行 
+	Stack s;
+	InitStack(&s);
+	printf("1----Push\n2----Pop\n3----Convert\n");
+	while(scanf("%d", &choose)){
+		switch(choose){
+			case 1:
+				scanf("%d", &e);
+				Push(&s, e);	
+				break;
+			case 2:
+				f = Pop(&s, &e);
+				if(f == 1)	//判断函数是否执行正确 
+					printf("Pop elemt is %d\n", e);
+				else if(f == 0)
+					printf("Error !\n");
+				break;
+			case 3:
+				Convert(&s);
+				break;
+		}
+		printf("1----Push\n2----Pop\n3----Convert\n");
+	}
+	return 0;
+}
+/* //顺序栈函数部分 
+void InitStack(SqStack **s){
+	(*s) = (Stack *)malloc(sizeof(Stack));
+	(*s)->top = 0;
+}
+
+int Push(Stack *s, ElemType e){
+	if(s->top >= MAXSIZE){	//判断栈是否满 
+		printf("Stack is Full !\n");
+		return 0;
+	}
+	s->elem[s->top++] = e;
+	//printf("Success !\n");
+	return 1;
+}
+
+int Pop(Stack *s, ElemType *e){
+	if(s->top == 0){	//判断栈是否空 
+		printf("Stack is empty !\n");
+		return 0;
+	}
+	*e = s->elem[--s->top];
+	//printf("Success !\n");
+	return 1;
+}
+
+void Convert(Stack *s){
+	int i, m, n;	//计数，源数字，需要转换的进制 
+	int e;	//压栈使用的变量 
+	printf("Enter a source decimal number: ");
+	scanf("%d", &m);
+	printf("Enter a end-on system number: ");
+	scanf("%d", &n);
+	while(m){	//计算并压栈 
+		i = m%n;
+		Push(s, i);
+		m = m/n;
+	}
+	while(s->top != 0){	//出栈 
+		Pop(s, &e);
+		if(e == 10){
+			printf("A");
+			continue;
+		}
+		if(e == 11){
+			printf("B");
+			continue;
+		}
+		if(e == 12){
+			printf("C");
+			continue;
+		}
+		if(e == 13){
+			printf("D");
+			continue;
+		}
+		if(e == 14){
+			printf("E");
+			continue;
+		}
+		printf("%d", e);
+	}
+	printf("\n");
+}
+*/ //顺序栈函数结束部分 
+
+void InitStack(Stack *s){
+	s->top = NULL;
+}
+void Push(Stack *s, ElemType e){
+	SNode *p;
+	p = (SNode *)malloc(sizeof(SNode));
+	p->data = e;
+	if(s->top == NULL){
+		p->next = NULL;
+	}
+	else{
+		p->next = s->top;
+	}
+	s->top = p;
+}
+
+int Pop(Stack *s, ElemType *e){
+	SNode *p;
+	if(s->top == NULL) return 0;
+	p = s->top;
+	*e = p->data;
+	s->top = s->top->next;
+	free(p);
+}
+
+void Convert(Stack *s){
+	int i, m, n;	//计数，源数字，需要转换的进制 
+	int e;	//压栈使用的变量 
+	printf("Enter a source decimal number: ");
+	scanf("%d", &m);
+	printf("Enter a end-on system number: ");
+	scanf("%d", &n);
+	while(m){	//计算并压栈 
+		i = m%n;
+		Push(s, i);
+		m = m/n;
+	}
+	while(s->top != 0){	//出栈 
+		Pop(s, &e);
+		if(e == 10){
+			printf("A");
+			continue;
+		}
+		if(e == 11){
+			printf("B");
+			continue;
+		}
+		if(e == 12){
+			printf("C");
+			continue;
+		}
+		if(e == 13){
+			printf("D");
+			continue;
+		}
+		if(e == 14){
+			printf("E");
+			continue;
+		}
+		printf("%d", e);
+	}
+	printf("\n");
+}
