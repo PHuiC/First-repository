@@ -1301,8 +1301,8 @@ int main(){
 #define MAXSIZE 100
 
 typedef int ElemType;
-
-/*	//顺序栈 
+/*
+	//顺序栈 
 typedef struct{
 	ElemType elem[MAXSIZE];
 	int top;
@@ -1316,12 +1316,15 @@ typedef struct SNode{
 typedef struct LinkStack{
 	SNode *top;
 }Stack;
-/*	//顺序栈函数声明部分 
+
+/*
+	//顺序栈函数声明部分 
 void InitStack(Stack **);	//初始化栈 
 int Push(Stack *, ElemType);	//压栈 
 int Pop(Stack *, ElemType *);	//出栈 
 void Convert(Stack *);	//进制转换 
-*/	//顺序栈函数声明结束
+    //顺序栈函数声明结束
+*/
 
 void InitStack(Stack *s);
 void Push(Stack *, ElemType); 
@@ -1331,24 +1334,28 @@ void Convert(Stack *);	//进制转换
 int main(){
 	int choose; //菜单选择 
 	int e;	//函数返回值 
-	int f;	//判断函数是否正确执行 
+    int f;	//判断函数是否正确执行
+    //Stack *s; //顺序栈 
 	Stack s;
 	InitStack(&s);
 	printf("1----Push\n2----Pop\n3----Convert\n");
 	while(scanf("%d", &choose)){
 		switch(choose){
 			case 1:
-				scanf("%d", &e);
+                scanf("%d", &e);
+                //Push(s, e); //顺序栈
 				Push(&s, e);	
 				break;
-			case 2:
+            case 2:
+                //f = Pop(s, &e);  //顺序栈
 				f = Pop(&s, &e);
 				if(f == 1)	//判断函数是否执行正确 
 					printf("Pop elemt is %d\n", e);
 				else if(f == 0)
 					printf("Error !\n");
 				break;
-			case 3:
+            case 3:
+                //Convert(s); //顺序栈
 				Convert(&s);
 				break;
 		}
@@ -1357,7 +1364,7 @@ int main(){
 	return 0;
 }
 /* //顺序栈函数部分 
-void InitStack(SqStack **s){
+void InitStack(Stack **s){
 	(*s) = (Stack *)malloc(sizeof(Stack));
 	(*s)->top = 0;
 }
